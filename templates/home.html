@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>Orders:</h1>
+    <a class="btn btn-info" href="/add" role="button">Add manual order</a>
+    <a class="btn btn-warning float-right" href="/" role="button" >Refresh List</a>
+<p></p>
+    <div class="table-responsive">
+    <table class="table table-hover">
+      <tr class="thead-dark"><th>OrderID</th><th>Order</th><th>Cost</th><th>Paid</th><th>Order Time</th><th></th></tr>
+      {% for row in orderData %}
+        <tr>
+            <td>{{row[0]}}</td>
+            <td>{% autoescape false %}
+            {{row[1]}}
+            {% endautoescape %}</td>
+            <td>${{row[2]}}</td>
+            <td>{{row[3]}}
+                {% if row[3] == 'No' %}
+                <form class="form-inline" action="/paid">
+                <button class="btn btn-info" type="submit" name="orderID" value="{{row[0]}}">Mark Paid</button>
+                </form>
+                {% endif %}
+            </td>
+            <td>{{row[4]}}</td>
+            <td>
+                <a class="btn btn-info" href="/edit/{{row[0]}}" role="button">Edit</a>
+                <a class="btn btn-success" href="/processdelivery/{{row[0]}}" role="button">Delivered</a>
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+    </div>
+
+{% endblock %}

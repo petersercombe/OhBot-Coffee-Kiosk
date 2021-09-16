@@ -1,0 +1,7 @@
+# Python packages required
+ohbot
+fuzzywuzzy
+keyboard
+Flask
+azure-cognitiveservices-speech
+opencv-python

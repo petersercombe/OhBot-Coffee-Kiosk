@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Add new order</h1>
+
+<form action="/add" method="post" class="needs-validation">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" id="name" name="name" required>
+  </div>
+
+  {% for number in range(5) %}
+  <div class="form-row">
+    <div class="input-group col-md-5">
+        <label class="sr-only" for="order{{loop.index}}">Order {{loop.index}}:</label>
+        <div class="input-group-prepend">
+            <div class="input-group-text">Order {{loop.index}}:</div>
+        </div>
+        <select class="form-control" id="order{{loop.index}}" name="order{{loop.index}}">
+          <option selected></option>
+          {% for choice in drinks %}
+          <option>{{choice[0]}}</option>
+          {% endfor %}
+        </select>
+    </div>
+
+    <div class="input-group col-md-3">
+        <label class="sr-only" for="shots{{loop.index}}">Shots {{loop.index}}:</label>
+        <div class="input-group-prepend">
+            <div class="input-group-text">Shots {{loop.index}}:</div>
+        </div>
+        <select class="form-control" id="shots{{loop.index}}" name="shots{{loop.index}}">
+          <option selected></option>
+          {% for choice in shots %}
+          <option>({{choice}})</option>
+          {% endfor %}
+          <option>(N/A)</option>
+        </select>
+    </div>
+
+    <div class="input-group col-md-4">
+      <label class="sr-only" for="milk{{loop.index}}">Milk {{loop.index}}:</label>
+        <div class="input-group-prepend">
+            <div class="input-group-text">Milk {{loop.index}}:</div>
+        </div>
+      <select class="form-control" id="milk{{loop.index}}" name="milk{{loop.index}}">
+        <option selected></option>
+        {% for choice in milk %}
+        <option>with {{choice}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="form-group">
+    <label for="special">Special Requests:</label>
+    <input type="text" class="form-control" id="special" name="special">
+  </div>
+  <div class="form-group">
+    <label for="cost">Cost:</label>
+    <input type="text" class="form-control" id="cost" name="cost" required>
+  </div>
+
+  <div class="form-group">
+  <label for="paid">Payment status:</label>
+  <select class="form-control" id="paid" name="paid">
+    <option>Yes</option>
+    <option>No</option>
+  </select>
+  </div>
+
+  <br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+{% endblock %}
